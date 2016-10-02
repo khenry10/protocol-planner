@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Protocol Planner </title>
+  <link rel="stylesheet" href="style.css" >
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-resource.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
+  <script src="app.js"></script>
+</head>
+<body data-ng-app="app">
+  <main data-ng-controller="protocolController as protocolVM">
+    <div class="header">
+      <h1> Protocol Planner </h1>
+    </div>
+    <div class="input-fields">
+      <select ng-model="selectedProtocol" ng-options="protocol for protocol in protocolVM.protocols" >
+        <option value='' disabled selected>Please Choose a Protocol </option>
+      </select>
+      <input ng-if="selectedProtocol === 'Antagonist' || selectedProtocol === 'Lupron Trigger'
+      "type="number" data-ng-model="protocolVM.birthControl" placeholder="# of Days on Birth Control"/>
+      <input type="date" data-ng-model="protocolVM.firstDayOfBC" placeholder="First Day of Birth Control"/>
+      <button ng-click="protocolVM.enter(selectedProtocol)"> Enter </button>
+    </div>
+    <table class="protocol-table" ng-show="protocolVM.datesEntered">
+      <tr>
+        <th> Date </th>
+        <th> Instructions </th>
+      </tr>
+        <td> {{protocolVM.firstDayOfBC.toDateString()}} </td>
+        <td>Start your birth control pills and take 1 tablet for {{protocolVM.birthControl}} days. </td>
+      </tr>
+      <tr>
+        <td> {{protocolVM.dateAfterBC.toDateString()}} </td>
+        <td> Come into the office for a check-up </td>
+      </tr>
+      <tr>
+        <td> {{protocolVM.stimDays[0].toDateString()}} </td>
+        <td> Patient starts stim at initital dose. </td>
+      </tr>
+      <tr>
+        <td> {{protocolVM.stimDays[1].toDateString()}} </td>
+        <td>  2nd day of stim at initital dose. </td>
+      </tr>
+      <tr>
+        <td> {{protocolVM.stimDays[2].toDateString()}} </td>
+        <td>  3rd day of stim at initital dose. </td>
+      </tr>
+      <tr>
+        <td> {{protocolVM.stimDays[3].toDateString()}} </td>
+        <td>  Patient returns to the office on 4th day of stim. </td>
+      </tr>
+      <tr>
+        <td> {{protocolVM.stimDays[5].toDateString()}} </td>
+        <td>  Patient returns to the office on 6th day of stim. </td>
+      </tr>
+      <tr>
+        <td> {{protocolVM.stimDays[6].toDateString()}} - {{protocolVM.stimDays[11].toDateString()}} </td>
+        <td>  Days 7 - 12 of stim.  Patient should plan on frequent monitoring visits. </td>
+      </tr>
+      <tr>
+        <td> {{protocolVM.stimDays[11].toDateString()}} </td>
+        <td> Approximate date of trigger. </td>
+      </tr>
+      <tr ng-if="selectedProtocol === 'Lupron Trigger'">
+        <td> {{protocolVM.lupronTrigger.toDateString()}} </td>
+        <td> Patient visits office. </td>
+      </tr>
+      <tr>
+        <td> {{protocolVM.eggRetrieval.toDateString()}} </td>
+        <td> Egg retrieval. </td>
+      </tr>
+      <tr>
+        <td> {{protocolVM.embryoTransfer.toDateString()}} </td>
+        <td> Embryo Transfer. </td>
+      </tr>
+      <tr>
+        <td> {{protocolVM.pregnancyTest.toDateString()}} </td>
+        <td> Pregnancy Test #1 </td>
+      </tr>
+    </table>
+  </main>
+</body>
+</html>
