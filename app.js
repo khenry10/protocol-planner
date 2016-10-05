@@ -8,7 +8,14 @@
   function protocolController(){
     var vm = this;
 
-    vm.protocols = ["Antagonist", "Lupron Trigger"]
+    vm.protocolNames = ["Antagonist", "Lupron Trigger", "Clomid"]
+
+    vm.protocols ={
+      antagonist: {
+        treatmentDate: [],
+        treatmentStep: ["Start your birth control pills and take 1 tablet", "Come into the office for a check-up"]
+      }
+    };
 
     vm.enter = function (protocol){
       console.log("protocol = " + protocol)
@@ -20,8 +27,12 @@
       var firstDayofBCYear = firstDayOfBCDate.getFullYear();
       var bcDay = firstDayOfBCDate.getDate();
 
+      vm.protocols.antagonist.treatmentDate.push(vm.firstDayOfBC)
+
       vm.dayAfterBC = bcDay + numberOfBCDays;
       vm.dateAfterBC = new Date(firstDayofBCYear,firstDayofBCMonth, vm.dayAfterBC);
+      vm.protocols.antagonist.treatmentDate.push(vm.dateAfterBC)
+      console.log(vm.protocols)
 
       vm.stimDays = []
       for(var i = 3; i < 15; i++){
