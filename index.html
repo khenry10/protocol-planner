@@ -14,14 +14,30 @@
       <h1> Protocol Planner </h1>
     </div>
     <div class="input-fields">
-      <select ng-model="selectedProtocol" ng-options="protocol for protocol in protocolVM.protocols" >
+      <select ng-model="selectedProtocol" ng-options="protocol for protocol in protocolVM.protocolNames" >
         <option value='' disabled selected>Please Choose a Protocol </option>
       </select>
-      <input ng-if="selectedProtocol === 'Antagonist' || selectedProtocol === 'Lupron Trigger'
-      "type="number" data-ng-model="protocolVM.birthControl" placeholder="# of Days on Birth Control"/>
-      <input type="date" data-ng-model="protocolVM.firstDayOfBC" placeholder="First Day of Birth Control"/>
+      <input ng-if="selectedProtocol === 'Antagonist' || selectedProtocol === 'Lupron Trigger'"
+      type="number" data-ng-model="protocolVM.birthControl" placeholder="# of Days on Birth Control"/>
+      <div class="date-box">
+        <h4 ng-if="selectedProtocol === 'Antagonist' || selectedProtocol === 'Lupron Trigger'">
+          Date Patient Starts Birth Control </h4>
+          <h4 ng-if="!selectedProtocol || selectedProtocol === 'Clomid'">
+            Date Patients Begins Menses</h4>
+        <input type="date" data-ng-model="protocolVM.firstDayOfBC" placeholder="First Day of Birth Control"/>
+      </div>
       <button ng-click="protocolVM.enter(selectedProtocol)"> Enter </button>
     </div>
+
+    <table class="protocol-table">
+      <tr ng-repeat="date in protocolVM.protocols.antagonist.treatmentDate" &&
+      ng-repeat="step in protocolVM.protocols.antagonist.treatmentStep">
+        <td> {{step}} </td>
+        <td> {{date}}</td>
+      </tr>
+
+    </table>
+
     <table class="protocol-table" ng-show="protocolVM.datesEntered">
       <tr>
         <th> Date </th>
