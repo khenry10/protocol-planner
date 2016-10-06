@@ -7,17 +7,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-resource.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
   <script src="app.js"></script>
-
-  <!-- cdn for modernizr, if you haven't included it already -->
-<script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
-<!-- polyfiller file to detect and load polyfills -->
-<script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
-<script>
-  webshims.setOptions('waitReady', false);
-  webshims.setOptions('forms-ext', {types: 'date'});
-  webshims.polyfill('forms forms-ext');
-</script>
-
 </head>
 <body data-ng-app="app">
   <main data-ng-controller="protocolController as protocolVM">
@@ -40,16 +29,39 @@
       <button ng-click="protocolVM.enter(selectedProtocol)"> Enter </button>
     </div>
 
-    <table class="protocol-table">
-      <tr ng-repeat="date in protocolVM.protocols.antagonist.treatmentDate" &&
-      ng-repeat="step in protocolVM.protocols.antagonist.treatmentStep">
-        <td> {{step}} </td>
-        <td> {{date}}</td>
+    <table class="protocol-table" ng-show="protocolVM.datesEntered">
+      <tr>
+        <th> Date </th>
+        <th ng-if="selectedProtocol === 'Clomid' || selectedProtocol === 'Microdose Flare (No OCP)'
+        || selectedProtocol === 'Vivelle Patch'"> Protocol Day </th>
+        <th> Instructions </th>
       </tr>
-
+      <tr ng-repeat="date in protocolVM.protocols.antagonist.treatment">
+        <td> {{date.value.toDateString()}}</td>
+        <td> {{date.data}} </td>
+      </tr>
+      <tr ng-repeat="date in protocolVM.protocols.lupron.treatment">
+        <td> {{date.value.toDateString()}}</td>
+        <td> {{date.data}} </td>
+      </tr>
+      <tr ng-repeat="date in protocolVM.protocols.clomid.treatment">
+        <td> {{date.value.toDateString()}}</td>
+        <td> {{date.protocolDay}} </td>
+        <td> {{date.data}} </td>
+      </tr>
+      <tr ng-repeat="date in protocolVM.protocols.flare.treatment">
+        <td> {{date.value.toDateString()}}</td>
+        <td> {{date.protocolDay}} </td>
+        <td> {{date.data}} </td>
+      </tr>
+      <tr ng-repeat="date in protocolVM.protocols.vivelle.treatment">
+        <td> {{date.value.toDateString()}}</td>
+        <td> {{date.protocolDay}} </td>
+        <td> {{date.data}} </td>
+      </tr>
     </table>
 
-    <table class="protocol-table" ng-show="protocolVM.datesEntered">
+    <!-- <table class="protocol-table" ng-show="protocolVM.datesEntered">
       <tr>
         <th> Date </th>
         <th> Instructions </th>
@@ -105,7 +117,7 @@
         <td> {{protocolVM.pregnancyTest.toDateString()}} </td>
         <td> Pregnancy Test #1 </td>
       </tr>
-    </table>
+    </table> -->
   </main>
 </body>
 </html>
