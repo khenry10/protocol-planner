@@ -29,16 +29,39 @@
       <button ng-click="protocolVM.enter(selectedProtocol)"> Enter </button>
     </div>
 
-    <table class="protocol-table">
-      <tr ng-repeat="date in protocolVM.protocols.antagonist.treatmentDate" &&
-      ng-repeat="step in protocolVM.protocols.antagonist.treatmentStep">
-        <td> {{step}} </td>
-        <td> {{date}}</td>
+    <table class="protocol-table" ng-show="protocolVM.datesEntered">
+      <tr>
+        <th> Date </th>
+        <th ng-if="selectedProtocol === 'Clomid' || selectedProtocol === 'Microdose Flare (No OCP)'
+        || selectedProtocol === 'Vivelle Patch'"> Protocol Day </th>
+        <th> Instructions </th>
       </tr>
-
+      <tr ng-repeat="date in protocolVM.protocols.antagonist.treatment">
+        <td> {{date.value.toDateString()}}</td>
+        <td> {{date.data}} </td>
+      </tr>
+      <tr ng-repeat="date in protocolVM.protocols.lupron.treatment">
+        <td> {{date.value.toDateString()}}</td>
+        <td> {{date.data}} </td>
+      </tr>
+      <tr ng-repeat="date in protocolVM.protocols.clomid.treatment">
+        <td> {{date.value.toDateString()}}</td>
+        <td> {{date.protocolDay}} </td>
+        <td> {{date.data}} </td>
+      </tr>
+      <tr ng-repeat="date in protocolVM.protocols.flare.treatment">
+        <td> {{date.value.toDateString()}}</td>
+        <td> {{date.protocolDay}} </td>
+        <td> {{date.data}} </td>
+      </tr>
+      <tr ng-repeat="date in protocolVM.protocols.vivelle.treatment">
+        <td> {{date.value.toDateString()}}</td>
+        <td> {{date.protocolDay}} </td>
+        <td> {{date.data}} </td>
+      </tr>
     </table>
 
-    <table class="protocol-table" ng-show="protocolVM.datesEntered">
+    <!-- <table class="protocol-table" ng-show="protocolVM.datesEntered">
       <tr>
         <th> Date </th>
         <th> Instructions </th>
@@ -94,7 +117,7 @@
         <td> {{protocolVM.pregnancyTest.toDateString()}} </td>
         <td> Pregnancy Test #1 </td>
       </tr>
-    </table>
+    </table> -->
   </main>
 </body>
 </html>
